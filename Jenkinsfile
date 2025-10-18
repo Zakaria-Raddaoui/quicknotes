@@ -20,7 +20,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker compose up -d'
+                sh '''
+                echo "🧹 Cleaning up old containers..."
+                docker compose down --remove-orphans
+                echo "🚀 Starting new containers..."
+                docker compose up -d --build
+                '''
             }
         }
     }
