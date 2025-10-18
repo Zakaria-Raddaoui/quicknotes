@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Zakaria-Raddaoui/quicknotes.git'
+                checkout scm
             }
         }
 
@@ -27,7 +27,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker compose ps'
+            sh 'docker compose ps || true'
         }
     }
 }
