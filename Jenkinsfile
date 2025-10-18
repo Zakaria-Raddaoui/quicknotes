@@ -22,7 +22,7 @@ pipeline {
             steps {
                 sh '''
                 echo "🧹 Cleaning up old containers..."
-                docker compose down --remove-orphans
+                docker rm -f react-app postgres-db || true
                 echo "🚀 Starting new containers..."
                 docker compose up -d --build
                 '''
