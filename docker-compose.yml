@@ -13,6 +13,18 @@ services:
       - db
     volumes:
       - ./backend:/app
+  frontend:
+    build:
+      context: ./frontend
+    container_name: react-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm start
+
 
   db:
     image: postgres:17
@@ -23,7 +35,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: quicknotes
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 

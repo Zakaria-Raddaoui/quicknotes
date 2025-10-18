@@ -7,6 +7,7 @@ import crud
 from database import SessionLocal, engine, Base
 from sqlalchemy.exc import OperationalError
 import time
+from fastapi.middleware.cors import CORSMiddleware
 
 MAX_RETRIES = 10
 
@@ -19,7 +20,16 @@ for i in range(MAX_RETRIES):
         time.sleep(2)
 else:
     raise Exception("Database connection failed after multiple retries.")
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def get_db():
     db = SessionLocal()
