@@ -22,9 +22,9 @@ pipeline {
             steps {
                 sh '''
                 echo "🧹 Cleaning up old containers..."
-                docker rm -f react-app postgres-db fastapi-app|| true
+                docker compose -f $WORKSPACE/docker-compose.yml down --remove-orphans
                 echo "🚀 Starting new containers..."
-                docker compose up -d --build
+                docker compose -f $WORKSPACE/docker-compose.yml up -d --build
                 '''
             }
         }
