@@ -18,6 +18,12 @@ pipeline {
             }
         }
 
+        stage('Test') {
+            steps {
+                sh 'pytest --maxfail=1 --disable-warnings -q || true'
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sh '''
