@@ -1,8 +1,13 @@
 import pytest
+import os
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database import Base
+
+# Set testing mode
+os.environ["TESTING"] = "true"
+
 from main import app, get_db
 
 # Use in-memory SQLite database for testing

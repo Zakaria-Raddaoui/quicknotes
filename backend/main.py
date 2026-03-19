@@ -7,19 +7,22 @@ import crud
 from database import SessionLocal, engine, Base
 from sqlalchemy.exc import OperationalError
 import time
+import os
 from fastapi.middleware.cors import CORSMiddleware
 
-MAX_RETRIES = 10
+# Only attempt database connection if not in test mode
+if os.getenv("TESTING") != "true":
+    MAX_RETRIES = 10
 
-for i in range(MAX_RETRIES):
-    try:
-        Base.metadata.create_all(bind=engine)
-        break
-    except OperationalError:
-        print(f"[DB Retry] Attempt {i+1}/{MAX_RETRIES} - Waiting for database...")
-        time.sleep(2)
-else:
-    raise Exception("Database connection failed after multiple retries.")
+    for i in range(MAX_RETRIES):
+        try:
+            Base.metadata.create_all(bind=engine)
+            break
+        except OperationalError:
+            print(f"[DB Retry] Attempt {i+1}/{MAX_RETRIES} - Waiting for database...")
+            time.sleep(2)
+    else:
+        raise Exception("Database connection failed after multiple retries.")
 
 app = FastAPI()
 
