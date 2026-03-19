@@ -6,3 +6,6 @@ python-dotenv
 pydantic
 watchgod
 fastapi[all]
+pytest
+pytest-asyncio
+httpx
